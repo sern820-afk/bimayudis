@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OktoBOT</title>
+
+  <style>
+    :root{
+      --bg: #070707;
+      --accent: #d6ff00;
+      --accent2: #ffe700;
+    }
+
+    *{ box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body{
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: var(--bg);
+      color: #fff;
+      overflow: hidden;
+    }
+
+    /* ===============================1. WELCOME SCREEN=============================== */
+    .splash{
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      z-index: 9999;
+
+      background:
+        radial-gradient(800px 400px at 50% 45%, rgba(214,255,0,.12), transparent 60%),
+        linear-gradient(180deg, #050505, #0a0a0a);
+
+      transition: opacity .7s ease;
+    }
+
+    .splash.hide{
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .logo{
+      width: min(600px, 90vw);
+      animation: zoomIn 1s ease forwards;
+    }
+
+    @keyframes zoomIn{
+      from{ opacity: 0; transform: scale(.85); }
+      to  { opacity: 1; transform: scale(1); }
+    }
+
+    .progress{
+      margin: 25px auto;
+      width: 300px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.15);
+      overflow: hidden;
+    }
+
+    .bar{
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width .2s linear;
+    }
+
+    /* ===============================
+       2. BOOTCHAT PAGE BUTTON
+    =============================== */
+    .bootchat-page{
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      text-align: center;
+
+      background: radial-gradient(circle, rgba(214,255,0,.10), transparent 65%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .7s ease;
+    }
+
+    .bootchat-page.show{
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .bootchat-page h1{
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .btn-bootchat{
+      padding: 16px 40px;
+      border: none;
+      border-radius: 16px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      color: black;
+
+      box-shadow: 0 0 25px rgba(214,255,0,.45);
+      transition: transform .2s ease;
+    }
+
+    .btn-bootchat:hover{
+      transform: scale(1.08);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===============================WELCOME SCREEN=============================== -->
+  <div class="splash" id="splash">
+    <div>
+      <img src="yudhis.png" class="logo" alt="Logo BIM Project">
+
+      <div class="progress">
+        <div class="bar" id="bar"></div>
+      </div>
+
+      <p style="opacity:.7;">Loading...</p>
+    </div>
+  </div>
+
+
+  <!-- ===============================PAGE BUTTON BOOTCHAT=============================== -->
+  <div class="bootchat-page" id="bootchatPage">
+    <div>
+      <h1>Welcome to OktoBoot 🚀</h1>
+
+      <button class="btn-bootchat" id="openBootChat">
+        Open BootChat
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ===============================JAVASCRIPT=============================== -->
+  <script>
+    const splash = document.getElementById("splash");
+    const bar = document.getElementById("bar");
+
+    const bootchatPage = document.getElementById("bootchatPage");
+    const openBootChat = document.getElementById("openBootChat");
+
+    let progress = 0;
+
+    // Fake Loading Animation
+    function startLoading(){
+      const interval = setInterval(() => {
+        progress += Math.random() * 15;
+
+        if(progress >= 100){
+          progress = 100;
+          clearInterval(interval);
+
+          // Hide welcome screen
+          splash.classList.add("hide");
+
+          // Show BootChat button page
+          setTimeout(() => {
+            bootchatPage.classList.add("show");
+          }, 700);
+        }
+
+        bar.style.width = progress + "%";
+      }, 200);
+    }
+
+    // Button click → open bootchat.html
+    openBootChat.addEventListener("click", () => {
+      window.location.href = "https://oktobot-2bd357.zapier.app";
+    });
+
+    startLoading();
+  </script>
+
+</body>
+</html>
